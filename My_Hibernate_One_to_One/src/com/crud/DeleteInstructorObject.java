@@ -3,7 +3,9 @@ package com.crud;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import com.hibernate.Entity.Instructo;
+
+import com.hibernate.Entity.Class;
+import com.hibernate.Entity.Instructor;
 import com.hibernate.Entity.Instructor_Detail;
  
 
@@ -14,8 +16,9 @@ public class DeleteInstructorObject {
 		
 		SessionFactory factory = new Configuration()
 				.configure("hibernate.cfg.xml")
-				.addAnnotatedClass(Instructo.class)
+				.addAnnotatedClass(Instructor.class)
 				.addAnnotatedClass(Instructor_Detail.class)
+				.addAnnotatedClass(Class.class)
 				.buildSessionFactory();
 		
 		Session theSession = factory.getCurrentSession();
@@ -26,9 +29,9 @@ public class DeleteInstructorObject {
 			
 			// create object 
 			
-			int theid = 3;
+			int theid = 1;
 			
-			Instructo theInstructo = theSession.get(Instructo.class, theid);
+			Instructor theInstructo = theSession.get(Instructor.class, theid);
 			
 			if(theInstructo != null) {
 				

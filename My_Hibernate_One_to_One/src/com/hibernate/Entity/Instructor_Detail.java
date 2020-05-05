@@ -27,7 +27,7 @@ public class Instructor_Detail {
 	private String hobby;
 	
 	@OneToOne(mappedBy = "instructor_detail_id", cascade = CascadeType.ALL)
-	private Instructo instructo;
+	private Instructor instructo;
 
 	// create constructors
 
