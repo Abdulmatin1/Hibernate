@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -18,7 +20,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.ManyToAny;
 
 @Entity
-@Table(name = "course")
+@Table(name = "courses")
 public class Course {
 
 	@Id
@@ -36,6 +38,18 @@ public class Course {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "course_id")
 	private List<Review> review;
+	
+	@ManyToMany(fetch = FetchType.LAZY, 
+			cascade = {
+					CascadeType.DETACH,
+					CascadeType.PERSIST,
+					CascadeType.REFRESH,
+					CascadeType.MERGE})
+	
+	
+	@JoinTable(name="course_student", 
+			joinColumns = @JoinColumn(name="course_id"), inverseJoinColumns = @JoinColumn(name="student_id") )
+	public List<Student> student;
 
 	public Course() {
 
@@ -87,7 +101,30 @@ public class Course {
 
 		review.add(theReview);
 	}
+ 
+		
+ 
 
+	public List<Student> getStudent() {
+		return student;
+	}
+
+	public void setStudent(List<Student> student) {
+		this.student = student;
+	}
+
+	public void addStudent(Student theStudent) {
+		
+		if(student == null) {
+			
+			
+			student = new ArrayList<>();
+		}
+		student.add(theStudent);
+		
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "course [id=" + id + ", title=" + title + ", instructor=" + instructor + "]";
